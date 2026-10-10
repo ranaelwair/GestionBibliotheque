@@ -1,0 +1,71 @@
+@model IEnumerable<GestionBibliotheque.Models.Emprunt>
+
+@{
+    ViewData["Title"] = "Emprunts";
+    var filtre = ViewData["Filtre"] as string ?? "encours";
+}
+
+<h1>Emprunts</h1>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <a class="btn btn-success" asp-action="Emprunter">+ Emprunter un livre</a>
+
+    <div class="btn-group">
+        <a asp-action="Index" asp-route-filtre="encours" class="btn btn-outline-primary @(filtre == "encours" ? "active" : "")">En cours</a>
+        <a asp-action="Index" asp-route-filtre="retard" class="btn btn-outline-primary @(filtre == "retard" ? "active" : "")">En retard</a>
+        <a asp-action="Index" asp-route-filtre="tous" class="btn btn-outline-primary @(filtre == "tous" ? "active" : "")">Tous</a>
+    </div>
+</div>
+
+<table class="table align-middle">
+    <thead>
+        <tr>
+            <th>Livre</th>
+            <th>Membre</th>
+            <th>Emprunté le</th>
+            <th>Retour prévu</th>
+            <th>Statut</th>
+            <th>Pénalité</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr class="@(item.EstEnRetard ? "table-danger" : "")">
+            <td>@item.Livre?.Titre</td>
+            <td>@item.Membre?.NomComplet</td>
+            <td>@item.DateEmprunt.ToShortDateString()</td>
+            <td>@item.DateRetourPrevue.ToShortDateString()</td>
+            <td>
+                @if (!item.EstEnCours)
+                {
+                    <span class="badge bg-secondary">Retourné le @item.DateRetourEffective?.ToShortDateString()</span>
+                }
+                else if (item.EstEnRetard)
+                {
+                    <span class="badge bg-danger">En retard</span>
+                }
+                else
+                {
+                    <span class="badge bg-success">En cours</span>
+                }
+            </td>
+            <td>@item.Penalite.ToString("C")</td>
+            <td>
+                @if (item.EstEnCours)
+                {
+                    @* Fonctionnalité 2 : retour du livre (POST vers sp_RetournerLivre) *@
+                    <form asp-action="Retourner" asp-route-id="@item.EmpruntID" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-sm btn-warning">Retourner</button>
+                    </form>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@if (!Model.Any())
+{
+    <p class="text-muted">Aucun emprunt pour ce filtre.</p>
+}

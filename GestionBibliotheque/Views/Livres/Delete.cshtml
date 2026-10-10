@@ -1,0 +1,25 @@
+@model GestionBibliotheque.Models.Livre
+
+@{
+    ViewData["Title"] = "Supprimer un livre";
+}
+
+<h1>Supprimer un livre</h1>
+
+<h4 class="text-danger">Voulez-vous vraiment supprimer ce livre ?</h4>
+<p class="text-muted">Suppression via <code>sp_Livre_Delete</code> : refusée si le livre a des emprunts en cours.</p>
+<hr />
+<dl class="row">
+    <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Titre)</dt>
+    <dd class="col-sm-9">@Html.DisplayFor(model => model.Titre)</dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Auteur)</dt>
+    <dd class="col-sm-9">@Html.DisplayFor(model => model.Auteur)</dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(model => model.ISBN)</dt>
+    <dd class="col-sm-9">@Html.DisplayFor(model => model.ISBN)</dd>
+</dl>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="LivreID" />
+    <input type="submit" value="Supprimer" class="btn btn-danger" />
+    <a asp-action="Index" class="btn btn-link">Retour à la liste</a>
+</form>

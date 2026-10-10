@@ -1,0 +1,48 @@
+@model GestionBibliotheque.Models.ViewModels.EmprunterViewModel
+
+@{
+    ViewData["Title"] = "Emprunter un livre";
+}
+
+<h1>Emprunter un livre</h1>
+<p class="text-muted">
+    Traitement par la procédure stockée <code>sp_EmprunterLivre</code>. Règles vérifiées :
+    exemplaire disponible, membre sans retard, maximum 3 emprunts en cours, pas deux fois le même livre.
+</p>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Emprunter" method="post">
+            @* Les refus de la procédure stockée s'affichent ici *@
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+            <div class="form-group mb-2">
+                <label asp-for="LivreID" class="control-label"></label>
+                <select asp-for="LivreID" class="form-select" asp-items="ViewBag.LivreID">
+                    <option value="">-- Choisir un livre disponible --</option>
+                </select>
+                <span asp-validation-for="LivreID" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-2">
+                <label asp-for="MembreID" class="control-label"></label>
+                <select asp-for="MembreID" class="form-select" asp-items="ViewBag.MembreID">
+                    <option value="">-- Choisir un membre --</option>
+                </select>
+                <span asp-validation-for="MembreID" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="DureeJours" class="control-label"></label>
+                <input asp-for="DureeJours" class="form-control" />
+                <span asp-validation-for="DureeJours" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Confirmer l'emprunt" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-link">Retour aux emprunts</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

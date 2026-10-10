@@ -1,0 +1,58 @@
+@model IEnumerable<GestionBibliotheque.Models.ViewModels.EmpruntRetard>
+
+@{
+    ViewData["Title"] = "Emprunts en retard";
+    var total = (decimal)(ViewData["TotalPenalites"] ?? 0m);
+}
+
+<h1>Emprunts en retard</h1>
+<p class="text-muted">
+    Rapport produit par la procédure stockée <code>sp_EmpruntsEnRetard</code>
+    (0,25 $ par jour de retard, plafonné à 10,00 $).
+</p>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-success">Aucun emprunt en retard. 🎉</div>
+}
+else
+{
+    <table class="table table-hover align-middle">
+        <thead class="table-danger">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.Titre)</th>
+                <th>@Html.DisplayNameFor(model => model.NomMembre)</th>
+                <th>@Html.DisplayNameFor(model => model.Courriel)</th>
+                <th>@Html.DisplayNameFor(model => model.DateRetourPrevue)</th>
+                <th>@Html.DisplayNameFor(model => model.JoursRetard)</th>
+                <th>@Html.DisplayNameFor(model => model.PenaliteEstimee)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Titre</td>
+                <td>@item.NomMembre</td>
+                <td><a href="mailto:@item.Courriel">@item.Courriel</a></td>
+                <td>@item.DateRetourPrevue.ToShortDateString()</td>
+                <td><span class="badge bg-danger">@item.JoursRetard j</span></td>
+                <td>@item.PenaliteEstimee.ToString("C")</td>
+                <td>
+                    <form asp-action="Retourner" asp-route-id="@item.EmpruntID" asp-route-retour="retards" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-sm btn-warning">Retourner</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+        <tfoot>
+            <tr class="fw-bold">
+                <td colspan="5" class="text-end">Total des pénalités estimées :</td>
+                <td>@total.ToString("C")</td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+}

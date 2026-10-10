@@ -1,0 +1,39 @@
+@{
+    ViewData["Title"] = "Accueil";
+}
+
+<div class="text-center mb-4">
+    <h1 class="display-5">Gestion de bibliothèque</h1>
+    
+</div>
+
+<div class="row g-3">
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Livres</h5>
+                <p class="card-text">CRUD complet réalisé avec des procédures stockées, avec recherche.</p>
+                <a class="btn btn-primary" asp-controller="Livres" asp-action="Index">Gérer les livres</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Membres</h5>
+                <p class="card-text">CRUD généré par Entity Framework (contrôleur avec vues).</p>
+                <a class="btn btn-primary" asp-controller="Membres" asp-action="Index">Gérer les membres</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card h-100 border-success">
+            <div class="card-body">
+                <h5 class="card-title">Emprunts</h5>
+                <p class="card-text">Fonctionnalités ajoutées : emprunter, retourner (avec pénalité), rapport des retards.</p>
+                <a class="btn btn-success" asp-controller="Emprunts" asp-action="Emprunter">Emprunter</a>
+                <a class="btn btn-outline-danger" asp-controller="Emprunts" asp-action="Retards">Retards</a>
+            </div>
+        </div>
+    </div>
+</div>

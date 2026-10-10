@@ -1,0 +1,34 @@
+@model GestionBibliotheque.Models.Livre
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<div class="form-group mb-2">
+    <label asp-for="Titre" class="control-label"></label>
+    <input asp-for="Titre" class="form-control" />
+    <span asp-validation-for="Titre" class="text-danger"></span>
+</div>
+<div class="form-group mb-2">
+    <label asp-for="Auteur" class="control-label"></label>
+    <input asp-for="Auteur" class="form-control" />
+    <span asp-validation-for="Auteur" class="text-danger"></span>
+</div>
+<div class="form-group mb-2">
+    <label asp-for="ISBN" class="control-label"></label>
+    <input asp-for="ISBN" class="form-control" />
+    <span asp-validation-for="ISBN" class="text-danger"></span>
+</div>
+<div class="form-group mb-2">
+    <label asp-for="Categorie" class="control-label"></label>
+    <input asp-for="Categorie" class="form-control" />
+    <span asp-validation-for="Categorie" class="text-danger"></span>
+</div>
+<div class="form-group mb-2">
+    <label asp-for="AnneePublication" class="control-label"></label>
+    <input asp-for="AnneePublication" class="form-control" />
+    <span asp-validation-for="AnneePublication" class="text-danger"></span>
+</div>
+<div class="form-group mb-3">
+    <label asp-for="NbExemplaires" class="control-label"></label>
+    <input asp-for="NbExemplaires" class="form-control" />
+    <span asp-validation-for="NbExemplaires" class="text-danger"></span>
+</div>

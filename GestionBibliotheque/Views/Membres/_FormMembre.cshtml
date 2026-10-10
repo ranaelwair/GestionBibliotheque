@@ -1,0 +1,24 @@
+@model GestionBibliotheque.Models.Membre
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<div class="form-group mb-2">
+    <label asp-for="Nom" class="control-label"></label>
+    <input asp-for="Nom" class="form-control" />
+    <span asp-validation-for="Nom" class="text-danger"></span>
+</div>
+<div class="form-group mb-2">
+    <label asp-for="Prenom" class="control-label"></label>
+    <input asp-for="Prenom" class="form-control" />
+    <span asp-validation-for="Prenom" class="text-danger"></span>
+</div>
+<div class="form-group mb-2">
+    <label asp-for="Courriel" class="control-label"></label>
+    <input asp-for="Courriel" class="form-control" />
+    <span asp-validation-for="Courriel" class="text-danger"></span>
+</div>
+<div class="form-group mb-3">
+    <label asp-for="DateInscription" class="control-label"></label>
+    <input asp-for="DateInscription" class="form-control" />
+    <span asp-validation-for="DateInscription" class="text-danger"></span>
+</div>

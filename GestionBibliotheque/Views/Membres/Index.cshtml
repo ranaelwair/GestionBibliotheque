@@ -1,0 +1,39 @@
+@model IEnumerable<GestionBibliotheque.Models.Membre>
+
+@{
+    ViewData["Title"] = "Membres";
+}
+
+<h1>Membres</h1>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">+ Ajouter un membre</a>
+</p>
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Nom)</th>
+            <th>@Html.DisplayNameFor(model => model.Prenom)</th>
+            <th>@Html.DisplayNameFor(model => model.Courriel)</th>
+            <th>@Html.DisplayNameFor(model => model.DateInscription)</th>
+            <th>Emprunts en cours</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Nom)</td>
+            <td>@Html.DisplayFor(modelItem => item.Prenom)</td>
+            <td>@Html.DisplayFor(modelItem => item.Courriel)</td>
+            <td>@Html.DisplayFor(modelItem => item.DateInscription)</td>
+            <td>@(item.Emprunts?.Count(e => e.EstEnCours) ?? 0) / 3</td>
+            <td class="text-nowrap">
+                <a class="btn btn-sm btn-outline-primary" asp-action="Edit" asp-route-id="@item.MembreID">Modifier</a>
+                <a class="btn btn-sm btn-outline-secondary" asp-action="Details" asp-route-id="@item.MembreID">Détails</a>
+                <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@item.MembreID">Supprimer</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,24 @@
+@model GestionBibliotheque.Models.Livre
+
+@{
+    ViewData["Title"] = "Ajouter un livre";
+}
+
+<h1>Ajouter un livre</h1>
+<p class="text-muted">Enregistrement via la procédure stockée <code>sp_Livre_Insert</code>.</p>
+<hr />
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="Create">
+            <partial name="_FormLivre" model="Model" />
+            <div class="form-group">
+                <input type="submit" value="Ajouter" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-link">Retour à la liste</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

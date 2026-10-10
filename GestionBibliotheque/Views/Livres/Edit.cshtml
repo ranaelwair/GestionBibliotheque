@@ -1,0 +1,26 @@
+@model GestionBibliotheque.Models.Livre
+
+@{
+    ViewData["Title"] = "Modifier un livre";
+}
+
+<h1>Modifier un livre</h1>
+<p class="text-muted">Mise à jour via la procédure stockée <code>sp_Livre_Update</code>
+    (le nombre de disponibles est recalculé automatiquement).</p>
+<hr />
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="Edit">
+            <input type="hidden" asp-for="LivreID" />
+            <partial name="_FormLivre" model="Model" />
+            <div class="form-group">
+                <input type="submit" value="Enregistrer" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-link">Retour à la liste</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

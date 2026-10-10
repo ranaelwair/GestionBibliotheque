@@ -1,0 +1,56 @@
+@model GestionBibliotheque.Models.Membre
+
+@{
+    ViewData["Title"] = "Détails du membre";
+    var emprunts = Model.Emprunts?.OrderByDescending(e => e.DateEmprunt).ToList() ?? new();
+}
+
+<h1>@Model.NomComplet</h1>
+<hr />
+<dl class="row">
+    <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Courriel)</dt>
+    <dd class="col-sm-9">@Html.DisplayFor(model => model.Courriel)</dd>
+    <dt class="col-sm-3">@Html.DisplayNameFor(model => model.DateInscription)</dt>
+    <dd class="col-sm-9">@Html.DisplayFor(model => model.DateInscription)</dd>
+    <dt class="col-sm-3">Total des pénalités</dt>
+    <dd class="col-sm-9">@emprunts.Sum(e => e.Penalite).ToString("C")</dd>
+</dl>
+
+<h4>Emprunts</h4>
+@if (emprunts.Count == 0)
+{
+    <p class="text-muted">Aucun emprunt.</p>
+}
+else
+{
+    <table class="table table-sm align-middle">
+        <thead>
+            <tr><th>Livre</th><th>Emprunté le</th><th>Retour prévu</th><th>Retourné le</th><th>Pénalité</th><th></th></tr>
+        </thead>
+        <tbody>
+        @foreach (var e in emprunts)
+        {
+            <tr class="@(e.EstEnRetard ? "table-danger" : "")">
+                <td>@e.Livre?.Titre</td>
+                <td>@e.DateEmprunt.ToShortDateString()</td>
+                <td>@e.DateRetourPrevue.ToShortDateString()</td>
+                <td>@(e.DateRetourEffective?.ToShortDateString() ?? "en cours")</td>
+                <td>@e.Penalite.ToString("C")</td>
+                <td>
+                    @if (e.EstEnCours)
+                    {
+                        <form asp-controller="Emprunts" asp-action="Retourner" asp-route-id="@e.EmpruntID" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-warning">Retourner</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+<div>
+    <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@Model.MembreID">Modifier</a>
+    <a class="btn btn-link" asp-action="Index">Retour à la liste</a>
+</div>

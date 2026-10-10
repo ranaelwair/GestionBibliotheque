@@ -1,0 +1,24 @@
+@model GestionBibliotheque.Models.Membre
+
+@{
+    ViewData["Title"] = "Modifier un membre";
+}
+
+<h1>Modifier un membre</h1>
+<hr />
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="Edit">
+            <input type="hidden" asp-for="MembreID" />
+            <partial name="_FormMembre" model="Model" />
+            <div class="form-group">
+                <input type="submit" value="Enregistrer" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-link">Retour à la liste</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
